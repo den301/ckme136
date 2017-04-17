@@ -11,7 +11,7 @@ TOKEN_SECRET = 'Is*******************************************************gC'
 class Listener(StreamListener):
 	
 	def on_status(self, status):
-    # The tweet attributes of interest to be stored
+		# The tweet attributes of interest to be stored
 		description = status.user.description
 		text = status.text
 		coords = status.coordinates
@@ -22,7 +22,7 @@ class Listener(StreamListener):
 		lang = status.lang
 		 
 		if coords is not None:
-      # Only store the Tweet if there are geo coords
+			# Only store the Tweet if there are geo coords
 			coords = json.dumps(coords)
 			try:
 				table.insert(dict(
@@ -33,7 +33,6 @@ class Listener(StreamListener):
 					user_name=name,
 					id_str=id_str,
 					created=created,
-					#retweeted = retweeted_status,
 					lang = lang,
 				))
 				print(text)
@@ -43,14 +42,16 @@ class Listener(StreamListener):
 	def on_error(self, status_code):
 		if status_code == 420:
 			return False
-      
-# Authorize user with Twitter		
+
+# Authorize user with Twitter			
 auth = OAuthHandler(API_KEY, API_SECRET)
 auth.set_access_token(TOKEN_KEY, TOKEN_SECRET)
+
 
 # Store tweets in SQLite Database, table is called 'tweets'
 db = dataset.connect('sqlite:///twitter_scrape.db')
 table = db['tweets']
+
 
 # Real time stream tweets and store in database.
 # Geo coordinates are set to capture all of southern Canada
