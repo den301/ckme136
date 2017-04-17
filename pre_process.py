@@ -42,7 +42,7 @@ tweets = getNewTweets()
 
 tweet_list = []
 # Clean the Tweet up so there's just valid words and then
-# try to detect is the words are English
+# try to detect if the words are English
 for tweet in tweets[:10]:
 	tweet_text = tweet[0]
 	tweet_text = tweet_text.encode('utf-8')
